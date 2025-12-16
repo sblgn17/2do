@@ -1,5 +1,7 @@
 package org;
 
+import data.server.ServerConfig;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +67,7 @@ public class TaskManager {
 
 
     private void load() {
-        File file = new File("ToDO-Server/src/main/java/org/tasks.csv");
+        File file = new File(ServerConfig.TASK_FILE);
         if (!file.exists()) return;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -94,7 +96,7 @@ public class TaskManager {
     }
 
     private void save() throws IOException {
-        try (PrintWriter out = new PrintWriter(new FileWriter("ToDO-Server/src/main/java/org/tasks.csv"))) {
+        try (PrintWriter out = new PrintWriter(new FileWriter(ServerConfig.TASK_FILE))) {
             for (Task t : tasks) {
 
                 String date = "";
