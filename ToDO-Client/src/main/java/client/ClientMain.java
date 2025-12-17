@@ -9,7 +9,7 @@ public class ClientMain extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/views/dashboard.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/views/login.fxml"));
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
         stage.setWidth(1400);

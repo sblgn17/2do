@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ui.controllers.LoginController"
+      alignment="CENTER"
+      spacing="16"
+      styleClass="login-root"
+      stylesheets="@styles.css">
+
+
+    <Label text="ToDo Manager"
+           styleClass="login-title"/>
+
+    <Label text="Bitte anmelden"
+           styleClass="login-subtitle"/>
+
+    <VBox spacing="12"
+          maxWidth="320"
+          styleClass="login-card">
+
+        <TextField fx:id="emailField"
+                   promptText="E-Mail"
+                   styleClass="login-input"/>
+
+        <PasswordField fx:id="passwordField"
+                       promptText="Passwort"
+                       styleClass="login-input"/>
+
+        <Label fx:id="errorLabel"
+               styleClass="login-error"/>
+
+        <Button text="Anmelden"
+                onAction="#onLoginClick"
+                styleClass="login-button"/>
+    </VBox>
+
+</VBox>
