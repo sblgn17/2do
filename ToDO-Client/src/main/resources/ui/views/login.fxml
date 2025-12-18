@@ -3,7 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx/17"
+
+<VBox xmlns="http://javafx.com/javafx/23.0.5"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="ui.controllers.LoginController"
       alignment="CENTER"
