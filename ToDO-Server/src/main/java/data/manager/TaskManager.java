@@ -6,6 +6,7 @@ import server.ServerConfig;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -76,7 +77,8 @@ public class TaskManager {
             return new ArrayList<>();
         }
 
-        tasks = List.of(mapper.readValue(file, Task[].class));
+        Task[] taskArray = mapper.readValue(file, Task[].class);
+        tasks = new ArrayList<>(Arrays.asList(taskArray));
 
         return tasks;
     }
@@ -85,10 +87,17 @@ public class TaskManager {
         File file = new File(ServerConfig.TASK_FILE);
         file.getParentFile().mkdirs();
 
-        List<Task> tasks = load();
+        load();
 
-        tasks.add(task);
+        this.tasks.add(task);
 
-        mapper.writerWithDefaultPrettyPrinter().writeValue(file, tasks);
+        String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this.tasks);
+
+        try (FileWriter fw = new FileWriter(file)) {
+            fw.write(json);
+            fw.flush();
+        }
+
+        System.out.println("File written: " + file.length() + " bytes");
     }
 }

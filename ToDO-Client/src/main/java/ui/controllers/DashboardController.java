@@ -74,7 +74,6 @@ public class DashboardController {
 
             String date = LocalDate.now().toString();
 
-
             String cmd = "ADD_TASK " + date + " " + title;
             System.out.println("Sende an Server: '" + cmd + "'");
 

@@ -1,27 +1,15 @@
 package data.models;
 import java.util.UUID;
 
-/**
- * @author Kacper Bohaczyk
- * Objekt Task - Beinhaltet 2 Konstruktoren einer mit Datum einer ohne
- */
 public class Task {
+    private String id;
+    private String date;
+    private String title;
+    private String description;
+    private boolean completed;
+    private boolean tbd;
 
-    private final String id;
-    private final String date;
-    private final String title;
-    private final String description;
-    private final boolean completed;
-    private final boolean tbd;
-
-    public Task() {
-        this.id = null;
-        this.date = null;
-        this.title = null;
-        this.description = null;
-        this.completed = false;
-        this.tbd = false;
-    }
+    public Task() {}
 
     public Task(String date, String title) {
         this.id = UUID.randomUUID().toString();
@@ -41,10 +29,19 @@ public class Task {
         this.tbd = false;
     }
 
+    // ✅ Getter
     public String getId() { return id; }
     public String getDate() { return date; }
     public String getTitle() { return title; }
     public String getDescription() { return description; }
-    public String completed() { return description; }
-    public String tbd() { return description; }
+    public boolean isCompleted() { return completed; }
+    public boolean isTbd() { return tbd; }
+
+    // ✅ Setter
+    public void setId(String id) { this.id = id; }
+    public void setDate(String date) { this.date = date; }
+    public void setTitle(String title) { this.title = title; }
+    public void setDescription(String description) { this.description = description; }
+    public void setCompleted(boolean completed) { this.completed = completed; }
+    public void setTbd(boolean tbd) { this.tbd = tbd; }
 }

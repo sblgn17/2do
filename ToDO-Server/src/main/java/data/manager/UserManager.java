@@ -20,19 +20,24 @@ public class UserManager {
                 .anyMatch(u -> u.getEmail().equals(email) && u.getPassword().equals(password));
     }
 
-    public void load() {
+    public void load(){
         users.clear();
-        File f = new File("resources/main/users.csv");
-        System.out.println("USER_FILE = " + f.getPath());
-        System.out.println("Absoluter Pfad = " + f.getAbsolutePath());
-        System.out.println("Existiert Datei? " + f.exists());
+//        File f = new File("ToDO-Server/src/main/resources/users.csv");
+//        System.out.println("USER_FILE = " + f.getPath());
+//        System.out.println("Absoluter Pfad = " + f.getAbsolutePath());
+//        System.out.println("Existiert Datei? " + f.exists());
 
-        if (!f.exists()) {
-            System.out.println("users.csv existiert NICHT -> keine User geladen.");
-            return;
-        }
+//        if (!f.exists()) {
+//            System.out.println("users.csv existiert NICHT -> keine User geladen.");
+//            return;
+//        }
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
+        try(InputStream is = getClass().getClassLoader().getResourceAsStream("users.csv")){
+            if(is == null){
+                System.out.println("users.csv existiert NICHT im Ressourcen-Ordner -> keine User geladen.");
+                return;
+            }
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.trim().isEmpty()) continue;
@@ -40,9 +45,22 @@ public class UserManager {
                 if (p.length < 3) continue;
                 users.add(new User(p[0], p[1], p[2]));
             }
-            System.out.println("load(): " + users.size() + "User aus Datei geladen.");
-        } catch (IOException e) {
+            System.out.println("load(): " + users.size() + " User aus Datei geladen.");
+        }catch (Exception e){
             e.printStackTrace();
         }
+
+//        try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                if (line.trim().isEmpty()) continue;
+//                String[] p = line.split(";");
+//                if (p.length < 3) continue;
+//                users.add(new User(p[0], p[1], p[2]));
+//            }
+//            System.out.println("load(): " + users.size() + "User aus Datei geladen.");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 }
