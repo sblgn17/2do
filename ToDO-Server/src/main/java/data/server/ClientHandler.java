@@ -1,5 +1,5 @@
 package data.server;
-import org.Task;
+import data.models.Task;
 import org.TaskManager;
 import data.UserManager;
 
@@ -8,23 +8,25 @@ import java.net.Socket;
 
 public class ClientHandler extends Thread {
 
-    private Socket socket;
-    private BufferedReader in;
-    private PrintWriter out;
+    private final BufferedReader in;
+    private final PrintWriter out;
 
-    private UserManager userManager = new UserManager();
-    private TaskManager taskManager = new TaskManager();
+    private final UserManager userManager = new UserManager();
+    private final TaskManager taskManager = new TaskManager();
 
-    public ClientHandler(Socket socket) {
-        this.socket = socket;
+    public ClientHandler(Socket socket) throws IOException {
+        in  = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        out = new PrintWriter(socket.getOutputStream(), true);
+    }
+
+    public ClientHandler(BufferedReader in, PrintWriter out) {
+        this.in = in;
+        this.out = out;
     }
 
     @Override
     public void run() {
         try {
-            in  = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream(), true);
-
             out.println("CONNECTED");
 
             String request;
@@ -84,7 +86,7 @@ public class ClientHandler extends Thread {
 
                     StringBuilder sb = new StringBuilder();
                     for (Task t : taskManager.getTasksWithDate()) {
-                        sb.append(t.getDate()).append(";").append(t.getTitle()).append("\n");
+                        sb.append(t.getDescription()).append(";").append(t.getDate()).append("\n");
                     }
                     out.println(sb);
                     break;

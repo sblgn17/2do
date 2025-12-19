@@ -1,5 +1,7 @@
 package org;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import data.models.Task;
 import data.server.ServerConfig;
 
 import java.io.*;
@@ -13,22 +15,23 @@ import java.util.List;
 
 public class TaskManager {
 
-    private final List<Task> tasks = new ArrayList<>();
+    private List<Task> tasks = new ArrayList<>();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     public TaskManager() {
-        load();
+        try{
+            load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-
-    public void addTask(String title, String description) throws IOException {
-        tasks.add(new Task(title, description));
-        save();
+    public void addTask(String date, String title) throws IOException {
+        saveTask(new Task(date, title));
     }
 
-
-    public void addTask(String title, String description, String date) throws IOException {
-        tasks.add(new Task(title, description, date));
-        save();
+    public void addTask(String date, String title, String description) throws IOException {
+        saveTask(new Task(title, description, date));
     }
 
     public int getTaskCount() {
@@ -42,7 +45,7 @@ public class TaskManager {
     public List<Task> getTasksWithDate() {
         List<Task> result = new ArrayList<>();
         for (Task t : tasks) {
-            if (t.hasDate()) {
+            if (t.getDate() != null) {
                 result.add(t);
             }
         }
@@ -53,12 +56,12 @@ public class TaskManager {
         StringBuilder sb = new StringBuilder();
         for (Task t : tasks) {
             String date = "";
-            if (t.getDate() != null) {
-                date = t.getDate();
+            if (t.getDescription() != null) {
+                date = t.getDescription();
             }
-              sb.append(t.getId()).append(";")
+            sb.append(t.getId()).append(";")
+                    .append(t.getDate()).append(";")
                     .append(t.getTitle()).append(";")
-                    .append(t.getDescription()).append(";")
                     .append(date)
                     .append("\n");
         }
@@ -66,53 +69,26 @@ public class TaskManager {
     }
 
 
-    private void load() {
+    private List<Task> load() throws IOException {
         File file = new File(ServerConfig.TASK_FILE);
-        if (!file.exists()) return;
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] p = line.split(";", -1);
-
-                String title = p[1];
-                String description = p[2];
-                String date = null;
-
-                if (p.length > 3) {
-                    if (!p[3].isEmpty()) {
-                        date = p[3];
-                    }
-                }
-
-
-                if (date == null) {
-                    tasks.add(new Task(title, description));
-                } else {
-                    tasks.add(new Task(title, description, date));
-                }
-            }
-        } catch (IOException ignored) {}
-    }
-
-    private void save() throws IOException {
-        try (PrintWriter out = new PrintWriter(new FileWriter(ServerConfig.TASK_FILE))) {
-            for (Task t : tasks) {
-
-                String date = "";
-                if (t.getDate() != null) {
-                    date = t.getDate();
-                }
-
-                out.println(
-                        t.getId() + ";" +
-                                t.getTitle() + ";" +
-                                t.getDescription() + ";" +
-                                date
-                );
-            }
+        if (!file.exists() || file.length() == 0) {
+            return new ArrayList<>();
         }
+
+        tasks = List.of(mapper.readValue(file, Task[].class));
+
+        return tasks;
     }
 
+    private void saveTask(Task task) throws IOException {
+        File file = new File(ServerConfig.TASK_FILE);
+        file.getParentFile().mkdirs();
 
+        List<Task> tasks = load();
+
+        tasks.add(task);
+
+        mapper.writerWithDefaultPrettyPrinter().writeValue(file, tasks);
+    }
 }

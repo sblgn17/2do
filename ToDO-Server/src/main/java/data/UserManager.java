@@ -22,8 +22,8 @@ public class UserManager {
 
     public void load() {
         users.clear();
-        File f = new File("ToDO-Server/src/main/resources/users.csv");
-        System.out.println("USER_FILE = " + "ToDO-Server/src/main/resources/users.csv");
+        File f = new File("resources/main/users.csv");
+        System.out.println("USER_FILE = " + f.getPath());
         System.out.println("Absoluter Pfad = " + f.getAbsolutePath());
         System.out.println("Existiert Datei? " + f.exists());
 
