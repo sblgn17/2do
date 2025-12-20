@@ -29,7 +29,6 @@ public class Task {
         this.tbd = false;
     }
 
-    // ✅ Getter
     public String getId() { return id; }
     public String getDate() { return date; }
     public String getTitle() { return title; }
@@ -37,7 +36,6 @@ public class Task {
     public boolean isCompleted() { return completed; }
     public boolean isTbd() { return tbd; }
 
-    // ✅ Setter
     public void setId(String id) { this.id = id; }
     public void setDate(String date) { this.date = date; }
     public void setTitle(String title) { this.title = title; }

@@ -74,7 +74,7 @@ public class DashboardController {
 
             String date = LocalDate.now().toString();
 
-            String cmd = "ADD_TASK " + date + " " + title;
+            String cmd = "ADD_TASK " + Session.loggedInUserEmail + " " +date + " " + title;
             System.out.println("Sende an Server: '" + cmd + "'");
 
             String response = Session.client.send(cmd);
@@ -94,7 +94,7 @@ public class DashboardController {
     private void refreshDashboard() {
         try {
 
-            String response = Session.client.send("GET_TASKCOUNT");
+            String response = Session.client.send("GET_TASKCOUNT " + Session.loggedInUserEmail);
             int count = Integer.parseInt(response.trim());
 
 

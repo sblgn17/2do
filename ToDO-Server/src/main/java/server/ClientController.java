@@ -2,7 +2,6 @@ package server;
 import data.manager.TaskManager;
 import data.manager.UserManager;
 import data.models.Task;
-
 import java.io.*;
 import java.net.Socket;
 
@@ -12,7 +11,6 @@ public class ClientController extends Thread {
     private final PrintWriter out;
 
     private final UserManager userManager = new UserManager();
-    private final TaskManager taskManager = new TaskManager();
 
     public ClientController(Socket socket) throws IOException {
         in  = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -43,6 +41,7 @@ public class ClientController extends Thread {
     private void handleRequest(String req) {
         try {
             String[] parts = req.split(" ");
+            TaskManager taskManager = new TaskManager(parts[1]);
 
             switch (parts[0]) {
                 case "LOGIN":
@@ -60,7 +59,7 @@ public class ClientController extends Thread {
                     break;
 
                 case "ADD_TASK":
-                    taskManager.addTask(parts[1], parts[2]);
+                    taskManager.addTask(parts[1], parts[2], parts[3]);
                     out.println("OK ADD");
                     break;
                 case "ADD_DATETASK": {
@@ -78,7 +77,7 @@ public class ClientController extends Thread {
                     break;
                 }
                 case "GET_TASKCOUNT": {
-                    int count = taskManager.getTaskCount();
+                    int count = taskManager.getTaskCount(parts[1]);
                     out.println(count);
                     break;
                 }
