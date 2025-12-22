@@ -83,7 +83,7 @@ public class TaskManager {
             }
         }
 
-        return null;
+        return new ArrayList<>();
     }
 
     private void saveTask(String email, Task task) throws IOException {
