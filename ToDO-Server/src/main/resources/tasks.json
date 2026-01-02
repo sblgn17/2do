@@ -13,14 +13,7 @@
     "date" : "2025-12-22",
     "title" : "Lernen",
     "description" : "Mathe,ODE,IoT",
-    "completed" : false,
-    "tbd" : false
-  }, {
-    "id" : "22520772-0576-495f-a1ec-5521e9eba7c5",
-    "date" : "2025-12-22",
-    "title" : "Trainieren",
-    "description" : "MO:Push,MI:Pull,SA:Beine",
-    "completed" : false,
+    "completed" : true,
     "tbd" : false
   }, {
     "id" : "d8e35449-de68-456b-94cb-952c70905515",
@@ -28,6 +21,20 @@
     "title" : "Geschenke-kaufen",
     "description" : "MAMA:Blumen,Papa:Wein",
     "completed" : true,
+    "tbd" : false
+  }, {
+    "id" : "24f821f9-6b60-4cf1-8b44-70272e7d1180",
+    "date" : "2025-12-30",
+    "title" : "sdsd",
+    "description" : "sdsdsdsd",
+    "completed" : false,
+    "tbd" : false
+  }, {
+    "id" : "cdb71b33-30c7-4cb5-8358-006af2aeb608",
+    "date" : "2026-01-02",
+    "title" : "sdsd",
+    "description" : "",
+    "completed" : false,
     "tbd" : false
   } ]
 } ]
