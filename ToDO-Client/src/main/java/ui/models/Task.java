@@ -1,9 +1,10 @@
 package ui.models;
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class Task {
     private String id;
-    private String date;
+    private LocalDate date;
     private String title;
     private String description;
     private boolean completed;
@@ -13,7 +14,7 @@ public class Task {
 
     public Task(String id, String date, String title, String description, boolean completed, boolean tbd) {
         this.id = id;
-        this.date = date;
+        this.date = LocalDate.parse(date);
         this.title = title;
         this.description = "";
         this.completed = false;
@@ -22,7 +23,7 @@ public class Task {
 
     public Task(String date, String title, String description) {
         this.id = UUID.randomUUID().toString();
-        this.date = date;
+        this.date = LocalDate.parse(date);
         this.title = title;
         this.description = description;
         this.completed = false;
@@ -30,14 +31,14 @@ public class Task {
     }
 
     public String getId() { return id; }
-    public String getDate() { return date; }
+    public String getDate() { return date.toString(); }
     public String getTitle() { return title; }
     public String getDescription() { return description; }
     public boolean isCompleted() { return completed; }
     public boolean isTbd() { return tbd; }
 
     public void setId(String id) { this.id = id; }
-    public void setDate(String date) { this.date = date; }
+    public void setDate(String date) { this.date = LocalDate.parse(date); }
     public void setTitle(String title) { this.title = title; }
     public void setDescription(String description) { this.description = description; }
     public void setCompleted(boolean completed) { this.completed = completed; }
