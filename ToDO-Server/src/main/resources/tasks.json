@@ -6,6 +6,7 @@
     "date" : "2025-12-22",
     "title" : "Haushalt",
     "description" : "Staubsaugen,Wäsche-waschen,Kochen",
+    "dateTbd" : null,
     "completed" : false,
     "tbd" : true
   }, {
@@ -13,6 +14,7 @@
     "date" : "2025-12-22",
     "title" : "Lernen",
     "description" : "Mathe,ODE,IoT",
+    "dateTbd" : null,
     "completed" : true,
     "tbd" : false
   }, {
@@ -20,6 +22,7 @@
     "date" : "2025-12-22",
     "title" : "Geschenke-kaufen",
     "description" : "MAMA:Blumen,Papa:Wein",
+    "dateTbd" : null,
     "completed" : true,
     "tbd" : false
   }, {
@@ -27,6 +30,7 @@
     "date" : "2025-12-30",
     "title" : "sdsd",
     "description" : "sdsdsdsd",
+    "dateTbd" : null,
     "completed" : false,
     "tbd" : false
   }, {
@@ -34,6 +38,47 @@
     "date" : "2026-01-02",
     "title" : "sdsd",
     "description" : "",
+    "dateTbd" : null,
+    "completed" : false,
+    "tbd" : false
+  }, {
+    "id" : "6ac08a22-4e33-4971-8760-8fe177172fad",
+    "date" : "2026-01-05",
+    "title" : "teast",
+    "description" : "",
+    "dateTbd" : null,
+    "completed" : false,
+    "tbd" : false
+  }, {
+    "id" : "f505694d-c12a-482c-b51f-dd8ef654fc1f",
+    "date" : "2026-01-05",
+    "title" : "test",
+    "description" : "",
+    "dateTbd" : null,
+    "completed" : false,
+    "tbd" : false
+  }, {
+    "id" : "e0ef94dc-27ef-43de-bc82-bd3f39bb9a5e",
+    "date" : "2026-01-05",
+    "title" : "polizei",
+    "description" : "",
+    "dateTbd" : null,
+    "completed" : false,
+    "tbd" : false
+  }, {
+    "id" : "2ad886c1-a3ac-4fb8-a2a3-d8656e58f728",
+    "date" : "2026-01-05",
+    "title" : "123",
+    "description" : "sdsd",
+    "dateTbd" : null,
+    "completed" : false,
+    "tbd" : false
+  }, {
+    "id" : "ec7caaa3-1165-45e0-85e4-17e2dd41437a",
+    "date" : "2026-01-05",
+    "title" : "test",
+    "description" : "",
+    "dateTbd" : null,
     "completed" : false,
     "tbd" : false
   } ]
