@@ -70,7 +70,7 @@ public class ClientController extends Thread {
 
                 case "ADD_TASK":{
 
-                    taskManager.addTask(parts[1], parts[2], parts[3]);
+                    taskManager.addTask(parts[1], parts[2], parts[3],parts[4]);
                     out.println("OK ADD");
                     break;
                 }

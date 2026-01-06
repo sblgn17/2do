@@ -29,8 +29,16 @@ public class TaskManager {
         }
     }
 
-    public void addTask(String email, String date, String title) throws IOException {
-        Task task = new Task(date, title);
+
+    public void addTask(String email, String date, String title, String dateTbd) throws IOException {
+        Task task;
+        if (dateTbd.equals(date)) {
+            task = new Task(date, title);
+        }
+        else {
+            task = new Task(date, title, dateTbd);
+        }
+
         saveTask(email, task);
 
     }

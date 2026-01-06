@@ -24,12 +24,12 @@ public class Task {
         this.tbd = false;
     }
 
-    public Task(String date, String title, String description) {
+    public Task(String date, String title, String dateTbd) {
         this.id = UUID.randomUUID().toString();
         this.date = LocalDate.parse(date);
         this.title = title;
-        this.description = description;
-        this.dateTbd = null;
+        this.description = "";
+        this.dateTbd = (dateTbd != null && !dateTbd.isBlank()) ? LocalDate.parse(dateTbd) : null;
         this.completed = false;
         this.tbd = false;
     }

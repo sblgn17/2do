@@ -23,17 +23,17 @@ public class Task {
         this.tbd = tbd;
     }
 
-    public Task(String date, String title, String description) {
+    public Task(String date, String title, String dateTbd) {
         this.id = UUID.randomUUID().toString();
         this.date = LocalDate.parse(date);
         this.title = title;
-        this.description = description;
-        this.dateTbd = null;
+        this.description = "";
+        this.dateTbd = LocalDate.parse(dateTbd);
         this.completed = false;
         this.tbd = false;
     }
 
-    public Task(String date, String title, String description, String dateTbd) {
+    public Task(String date, String title,String dateTbd, String description ) {
         this.id = UUID.randomUUID().toString();
         this.date = LocalDate.parse(date);
         this.title = title;
