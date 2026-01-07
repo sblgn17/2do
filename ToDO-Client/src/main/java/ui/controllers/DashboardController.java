@@ -13,7 +13,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import ui.SceneManager;
 import ui.models.Task;
-
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
+import javafx.application.Platform;
+import javafx.util.Pair;
+import java.time.LocalDate;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -80,20 +84,52 @@ public class DashboardController {
     @FXML
     public void onAddEventClick() {
         try {
-            TextInputDialog dialog = new TextInputDialog();
+            Dialog<Pair<String, LocalDate>> dialog = new Dialog<>();
             dialog.setTitle("Neues Event");
             dialog.setHeaderText("Event hinzufügen");
-            dialog.setContentText("Titel eingeben:");
+
+            ButtonType addButtonType = new ButtonType("Hinzufügen", ButtonBar.ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().addAll(addButtonType, ButtonType.CANCEL);
+
+            GridPane grid = new GridPane();
+            grid.setHgap(10);
+            grid.setVgap(10);
+            grid.setPadding(new Insets(20, 150, 10, 10));
+
+            TextField titleField = new TextField();
+            titleField.setPromptText("Titel");
+            DatePicker deadlinePicker = new DatePicker();
+            deadlinePicker.setValue(LocalDate.now());
+            deadlinePicker.setPromptText("Fälligkeitsdatum auswählen");
+
+            grid.add(new Label("Titel:"), 0, 0);
+            grid.add(titleField, 1, 0);
+            grid.add(new Label("Fällig bis:"), 0, 1);
+            grid.add(deadlinePicker, 1, 1);
+
+            dialog.getDialogPane().setContent(grid);
+
+            Platform.runLater(() -> titleField.requestFocus());
+
+            dialog.setResultConverter(dialogButton -> {
+                if (dialogButton == addButtonType) {
+                    return new Pair<>(titleField.getText(), deadlinePicker.getValue());
+                }
+                return null;
+            });
 
             var result = dialog.showAndWait();
             if (result.isEmpty()) return;
 
-            String title = result.get().trim();
-            if (title.isBlank()) return;
+            String title = result.get().getKey().trim();
+            LocalDate deadline = result.get().getValue();
 
-            String date = LocalDate.now().toString();
+            if (title.isBlank() || deadline == null) return;
 
-            String cmd = "ADD_TASK " + Session.loggedInUserEmail + " " + date + " " + title;
+            String currentDate = LocalDate.now().toString();
+            String deadlineDate = deadline.toString();
+
+            String cmd = "ADD_TASK " + Session.loggedInUserEmail + " " + currentDate + " " + title + " " + deadlineDate;
 
             Session.client.send(cmd);
             onOpenClicked();
@@ -215,6 +251,11 @@ public class DashboardController {
         dateLabel.setMinWidth(100);
         dateLabel.setMaxWidth(100);
 
+        Label dateLabel2 = new Label(task.getDateTbd());
+        dateLabel2.setStyle("-fx-text-fill: #999999;");
+        dateLabel2.setMinWidth(100);
+        dateLabel2.setMaxWidth(100);
+
         HBox deleteBox = new HBox();
         deleteBox.setAlignment(Pos.CENTER);
         deleteBox.setMinWidth(60);
@@ -235,6 +276,7 @@ public class DashboardController {
                 tbdBox,
                 doneBox,
                 dateLabel,
+                dateLabel2,
                 deleteBox
         );
 

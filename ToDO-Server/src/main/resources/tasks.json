@@ -6,6 +6,7 @@
     "date" : "2025-12-22",
     "title" : "Haushalt",
     "description" : "Staubsaugen,Wäsche-waschen,Kochen",
+    "dateTbd" : null,
     "completed" : false,
     "tbd" : true
   }, {
@@ -13,21 +14,40 @@
     "date" : "2025-12-22",
     "title" : "Lernen",
     "description" : "Mathe,ODE,IoT",
-    "completed" : false,
-    "tbd" : false
-  }, {
-    "id" : "22520772-0576-495f-a1ec-5521e9eba7c5",
-    "date" : "2025-12-22",
-    "title" : "Trainieren",
-    "description" : "MO:Push,MI:Pull,SA:Beine",
-    "completed" : false,
+    "dateTbd" : null,
+    "completed" : true,
     "tbd" : false
   }, {
     "id" : "d8e35449-de68-456b-94cb-952c70905515",
     "date" : "2025-12-22",
     "title" : "Geschenke-kaufen",
     "description" : "MAMA:Blumen,Papa:Wein",
+    "dateTbd" : null,
     "completed" : true,
+    "tbd" : false
+  }, {
+    "id" : "2ad886c1-a3ac-4fb8-a2a3-d8656e58f728",
+    "date" : "2026-01-05",
+    "title" : "123",
+    "description" : "sdsd",
+    "dateTbd" : null,
+    "completed" : false,
+    "tbd" : false
+  }, {
+    "id" : "75a54bb7-ef85-460a-9a10-85961110ef84",
+    "date" : "2026-01-06",
+    "title" : "test",
+    "description" : "",
+    "dateTbd" : null,
+    "completed" : false,
+    "tbd" : false
+  }, {
+    "id" : "c18ad0da-cb44-44a7-8b0d-19b7880ebc43",
+    "date" : "2026-01-06",
+    "title" : "tes2",
+    "description" : "",
+    "dateTbd" : "2026-01-07",
+    "completed" : false,
     "tbd" : false
   } ]
 } ]

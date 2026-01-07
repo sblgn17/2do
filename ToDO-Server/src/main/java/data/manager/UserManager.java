@@ -1,74 +1,37 @@
 package data.manager;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import data.models.User;
-import server.ServerConfig;
+import data.json.UserRepository;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.List;
 
 public class UserManager {
 
-    private List<User> users = new ArrayList<>();
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final UserRepository repo = new UserRepository();
+    private List<User> users;
 
     public UserManager() throws IOException {
-        load();
+        this.users = repo.loadAll();
     }
 
     public boolean checkLogin(String email, String password) {
-        System.out.println("checkLogin(): email=" + email + ", pass=" + password);
-        System.out.println(users.size() + " User loadet");
-        return users.stream().anyMatch(u -> u.getEmail().equals(email) && u.getPassword().equals(password));
-    }
-
-    public void load() throws IOException {
-        users.clear();
-        File file = new File(ServerConfig.USER_FILE);
-        file.getParentFile().mkdirs();
-
-        if (!file.exists() || file.length() == 0) {
-           users = new ArrayList<>();
-           return;
-        }
-
-        User[] userArray = mapper.readValue(file, User[].class);
-        users = new ArrayList<>(Arrays.asList(userArray));
+        return users.stream()
+                .anyMatch(u ->
+                        u.getEmail().equals(email) &&
+                                u.getPassword().equals(password)
+                );
     }
 
     public boolean createNewUser(String name, String email, String password) throws IOException {
-        load();
-        File file = new File(ServerConfig.USER_FILE);
-        file.getParentFile().mkdirs();
+        users = repo.loadAll(); // refresh state
 
-        if(users.isEmpty()){
-            users.add(new User(name, email, password));
-            String json = mapper.writerWithView(User.UserFileView.class).withDefaultPrettyPrinter().writeValueAsString(users);
-
-            try (FileWriter fw = new FileWriter(file)) {
-                fw.write(json);
-                fw.flush();
-            }
-            return true;
-        }
-
-        for (User u : users) {
-            if (u.getEmail().equals(email)) {
-                return false;
-            }
+        if (users.stream().anyMatch(u -> u.getEmail().equals(email))) {
+            return false;
         }
 
         users.add(new User(name, email, password));
-
-        String json = mapper.writerWithView(User.UserFileView.class).withDefaultPrettyPrinter().writeValueAsString(users);
-
-        try (FileWriter fw = new FileWriter(file)) {
-            fw.write(json);
-            fw.flush();
-        }
-
-        System.out.println("File written: " + file.length() + " bytes");
-
+        repo.saveAll(users);
         return true;
     }
 }

@@ -5,13 +5,14 @@ import data.models.Task;
 import data.models.User;
 import server.ServerConfig;
 import java.io.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
  * @author Kacper Bohaczyk
- * Die Klasse managed der Speicher und erstellen der Tasks, sowie das laden.
+ * Die Klasse managed der Speicher und erstellen der Tasks, sowie das laden und filtern nach Datum
  */
 
 public class TaskManager {
@@ -28,8 +29,16 @@ public class TaskManager {
         }
     }
 
-    public void addTask(String email, String date, String title) throws IOException {
-        Task task = new Task(date, title);
+
+    public void addTask(String email, String date, String title, String dateTbd) throws IOException {
+        Task task;
+        if (dateTbd.equals(date)) {
+            task = new Task(date, title);
+        }
+        else {
+            task = new Task(date, title, dateTbd);
+        }
+
         saveTask(email, task);
 
     }
@@ -58,6 +67,77 @@ public class TaskManager {
     public String getUserTasks(String email) throws IOException {
 
         return mapper.writerWithView(User.TaskFileView.class).writeValueAsString(loadUserTask(email));
+    }
+
+    public String getUserTasksSortedByDate(String email) throws IOException {
+        List<Task> userTasks = loadUserTask(email);
+        userTasks.sort((t1, t2) -> LocalDate.parse(t1.getDate()).compareTo(LocalDate.parse(t2.getDate())));
+        return mapper.writerWithView(User.TaskFileView.class).writeValueAsString(userTasks);
+    }
+
+    public String getUserTasksSortedByDateDESC(String email) throws IOException {
+        List<Task> userTasks = loadUserTask(email);
+        userTasks.sort((t1, t2) -> LocalDate.parse(t2.getDate()).compareTo(LocalDate.parse(t1.getDate())));
+        return mapper.writerWithView(User.TaskFileView.class).writeValueAsString(userTasks);
+    }
+
+    public String getUserTasksSortedByDate(String email, int i) throws IOException {
+        List<Task> userWithTasks = new ArrayList<>();
+
+        if(i == 1){
+            for(Task t : loadUserTask(email)){
+                if(t.getCompleted() == false && t.getTbd() == false){
+                    userWithTasks.add(t);
+                }
+            }
+        }
+        if(i == 2){
+            for(Task t : loadUserTask(email)){
+                if(t.getTbd() == true){
+                    userWithTasks.add(t);
+                }
+            }
+        }
+        if(i == 3){
+            for(Task t : loadUserTask(email)){
+                if(t.getCompleted() == true){
+                    userWithTasks.add(t);
+                }
+            }
+        }
+        userWithTasks.sort((t1, t2) -> LocalDate.parse(t1.getDate()).compareTo(LocalDate.parse(t2.getDate())));
+
+        return mapper.writerWithView(User.TaskFileView.class).writeValueAsString(userWithTasks);
+    }
+
+
+    public String getUserTasksSortedByDateDESC(String email, int i) throws IOException {
+        List<Task> userWithTasks = new ArrayList<>();
+
+        if(i == 1){
+            for(Task t : loadUserTask(email)){
+                if(t.getCompleted() == false && t.getTbd() == false){
+                    userWithTasks.add(t);
+                }
+            }
+        }
+        if(i == 2){
+            for(Task t : loadUserTask(email)){
+                if(t.getTbd() == true){
+                    userWithTasks.add(t);
+                }
+            }
+        }
+        if(i == 3){
+            for(Task t : loadUserTask(email)){
+                if(t.getCompleted() == true){
+                    userWithTasks.add(t);
+                }
+            }
+        }
+        userWithTasks.sort((t1, t2) -> LocalDate.parse(t2.getDate()).compareTo(LocalDate.parse(t1.getDate())));
+
+        return mapper.writerWithView(User.TaskFileView.class).writeValueAsString(userWithTasks);
     }
 
     public String getUserTasks(String email, int i) throws IOException {
