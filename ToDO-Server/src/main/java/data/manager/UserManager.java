@@ -2,7 +2,10 @@ package data.manager;
 
 import data.models.User;
 import data.json.UserRepository;
+import server.ServerConfig;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
@@ -36,7 +39,7 @@ public class UserManager {
     }
 
     public boolean changePassword(String email, String oldPassword, String newPassword) throws IOException {
-        load();
+        repo.loadAll();
 
         for (User u : users) {
             if (u.getEmail().equals(email)) {
@@ -44,20 +47,8 @@ public class UserManager {
                 if (!u.getPassword().equals(oldPassword)) {
                     return false;
                 }
-
                 u.setPassword(newPassword);
-
-                File file = new File(ServerConfig.USER_FILE);
-                String json = mapper
-                        .writerWithView(User.UserFileView.class)
-                        .withDefaultPrettyPrinter()
-                        .writeValueAsString(users);
-
-                try (FileWriter fw = new FileWriter(file)) {
-                    fw.write(json);
-                    fw.flush();
-                }
-
+                repo.saveAll(users);
                 return true;
             }
         }
