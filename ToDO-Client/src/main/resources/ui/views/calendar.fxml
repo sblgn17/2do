@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane prefHeight="900.0" prefWidth="1200.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.5" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.CalendarController">
+
+    <left>
+        <VBox prefWidth="230" spacing="24" styleClass="sidebar">
+
+            <VBox spacing="12" styleClass="user-box">
+                <HBox spacing="10">
+                    <Label fx:id="userAvatarLabel" styleClass="user-avatar" text="AD" />
+                    <VBox spacing="2">
+                        <Label fx:id="userNameLabel" styleClass="user-name" text="Admin User" />
+                        <Label styleClass="user-role" text="ADMIN" />
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <Label styleClass="nav-title" text="NAVIGATION" />
+
+            <VBox spacing="4">
+                <Button onAction="#openDashboard" styleClass="nav-button" text="  🏠  Übersicht" />
+                <Button styleClass="nav-button" text="  📅  Kalender" />
+                <Button onAction="#openSettings" styleClass="nav-button" text="  ⚙️  Einstellungen" />
+            </VBox>
+
+            <VBox VBox.vgrow="ALWAYS" />
+
+            <Button fx:id="logoutButton" onAction="#onLogoutClick" styleClass="logout-button" text="  ⏏  Abmelden" />
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="18" styleClass="page-root">
+
+            <VBox spacing="4">
+                <Label styleClass="page-title" text="Kalender" />
+                <Label styleClass="page-subtitle" text="Verwalte deine Aufgaben im Kalender" />
+            </VBox>
+
+            <VBox spacing="12" styleClass="big-card" VBox.vgrow="ALWAYS">
+
+
+                <HBox alignment="CENTER" spacing="10">
+                    <Button mnemonicParsing="false" onAction="#backOneMonth" styleClass="month-nav-button" text="◀" />
+                    <HBox alignment="CENTER" spacing="8" HBox.hgrow="ALWAYS">
+                        <Text fx:id="month" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="month-text" text="####">
+                            <font>
+                                <Font size="22.0" />
+                            </font>
+                        </Text>
+                        <Text fx:id="year" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="year-text" text="####">
+                            <font>
+                                <Font size="22.0" />
+                            </font>
+                        </Text>
+                    </HBox>
+                    <Button mnemonicParsing="false" onAction="#forwardOneMonth" styleClass="month-nav-button" text="▶" />
+                </HBox>
+
+
+                <HBox fx:id="dayHeaderBox" alignment="CENTER" spacing="10">
+                    <padding>
+                        <Insets left="0" right="0" />
+                    </padding>
+                    <Label styleClass="day-header" text="So" alignment="CENTER" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                    <Label styleClass="day-header" text="Mo" alignment="CENTER" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                    <Label styleClass="day-header" text="Di" alignment="CENTER" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                    <Label styleClass="day-header" text="Mi" alignment="CENTER" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                    <Label styleClass="day-header" text="Do" alignment="CENTER" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                    <Label styleClass="day-header" text="Fr" alignment="CENTER" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                    <Label styleClass="day-header" text="Sa" alignment="CENTER" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+                </HBox>
+
+                <GridPane fx:id="calendar" hgap="10.0" vgap="5.0" VBox.vgrow="ALWAYS">
+                </GridPane>
+
+            </VBox>
+
+        </VBox>
+    </center>
+
+</BorderPane>
