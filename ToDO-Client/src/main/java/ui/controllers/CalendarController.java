@@ -1,5 +1,10 @@
 package ui.controllers;
 
+/**
+ * @author Kacper Bohaczyk
+ * @version 14-01-2026
+ */
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
